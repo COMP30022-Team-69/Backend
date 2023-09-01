@@ -1,6 +1,6 @@
 package com.team69.itproject.handlers;
 
-import com.team69.itproject.entities.ResponseEntity;
+import com.team69.itproject.entities.bo.ResponseEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;

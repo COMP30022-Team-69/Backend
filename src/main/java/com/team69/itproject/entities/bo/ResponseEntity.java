@@ -1,4 +1,4 @@
-package com.team69.itproject.entities;
+package com.team69.itproject.entities.bo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

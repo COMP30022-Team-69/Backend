@@ -1,4 +1,4 @@
-package com.team69.itproject.entities;
+package com.team69.itproject.entities.po;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.annotation.*;
@@ -12,8 +12,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,75 +27,84 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("用户实体类")
-public class UsersEntity implements Serializable, UserDetails {
+@ApiModel("User Persistent Object")
+public class UserPO implements Serializable, UserDetails {
     @TableField(exist = false)
     @ApiModelProperty(hidden = true)
+    @Serial
     private static final long serialVersionUID = 1L;
     /**
-     * 用户ID
+     * User ID
      */
-    @ApiModelProperty("用户ID")
+    @ApiModelProperty("User ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
-     * 用户登录账号
+     * Username
+     * Unique, used for login
      */
-    @ApiModelProperty(value = "用户名", notes = "唯一，用于登陆")
+    @ApiModelProperty(value = "Username", notes = "Unique, used for login")
     @TableField(value = "username")
     private String username;
     /**
-     * 用户登陆密码
+     * User password
      */
-    @ApiModelProperty("用户登陆密码")
+    @ApiModelProperty("User password")
     @TableField(value = "password")
     private String password;
     /**
-     * 状态，0禁用，1启用
+     * User Email
      */
-    @ApiModelProperty(value = "账户状态", notes = "0禁用，1启用")
+    @ApiModelProperty("User Email")
+    @TableField(value = "email")
+    private String email;
+    /**
+     * Account state
+     * 0 for disable, 1 for enable
+     */
+    @ApiModelProperty(value = "Account state", notes = "0 for disable, 1 for enable")
     @TableLogic(value = "1", delval = "0")
     @TableField(value = "status")
     @Builder.Default
     private boolean status = true;
     /**
-     * 创建时间
+     * Created time
      */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("Created time")
     @TableField(value = "create_time")
     @Builder.Default
     private LocalDateTime createTime = LocalDateTime.now();
     /**
-     * 用户备注
+     * User remark
      */
-    @ApiModelProperty("用户备注")
+    @ApiModelProperty("User remark")
     @TableField(value = "remark")
     private String remark = "";
     /**
-     * 是否过期
+     * If the account is expired
      */
-    @ApiModelProperty("是否过期")
+    @ApiModelProperty("If the account is expired")
     @TableField(value = "expired")
     @Builder.Default
     private boolean expired = false;
     /**
-     * 是否封禁
+     * If the account is locked
      */
-    @ApiModelProperty("是否封禁")
+    @ApiModelProperty("If the account is locked")
     @TableField(value = "locked")
     @Builder.Default
     private boolean locked = false;
     /**
-     * 凭证是否过期
+     * If the credentials is expired
      */
-    @ApiModelProperty("凭证是否过期")
+    @ApiModelProperty("If the credentials is expired")
     @TableField(value = "credentials_expired")
     @Builder.Default
     private boolean credentialsExpired = false;
     /**
-     * 用户权限
+     * User authorities
      */
-    @ApiModelProperty("用户权限")
+    @ApiModelProperty("User authorities")
     @TableField(value = "authorities", typeHandler = SimpleGrantTypeHandler.class)
     private List<SimpleGrantedAuthority> authorities;
 

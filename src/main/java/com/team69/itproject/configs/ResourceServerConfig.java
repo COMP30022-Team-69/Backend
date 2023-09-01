@@ -48,12 +48,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/v2/api-docs",
                         "/swagger-ui/**",
+                        "/swagger-ui/",
                         "/doc.html",
                         "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/webjars/**",
                         "/send/callback",
-                        "/oauth/**")
+                        "/oauth/**",
+                        "/user/register")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
