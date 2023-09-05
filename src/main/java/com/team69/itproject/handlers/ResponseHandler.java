@@ -26,7 +26,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
             return null;
         }
         log.info("Response out: class = {} content = {}", body.getClass().getSimpleName(), body);
-        if (body.getClass().getPackage().getName().contains("com.mrmagicbox")) {
+        if (body.getClass().getPackage().getName().contains("com.team69.itproject")) {
             if (body instanceof ResponseEntity) {
                 ResponseEntity<?> responseEntity = (ResponseEntity<?>) body;
                 HttpStatus httpStatus = HttpStatus.resolve(responseEntity.getCode());

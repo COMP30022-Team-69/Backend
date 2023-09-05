@@ -1,10 +1,11 @@
 package com.team69.itproject.controllers;
 
+import com.team69.itproject.aop.annotations.UserAuth;
+import com.team69.itproject.aop.enums.AccessLevel;
 import com.team69.itproject.dao.UserDAO;
 import com.team69.itproject.entities.bo.ResponseEntity;
 import com.team69.itproject.entities.dto.UsersDTO;
 import com.team69.itproject.entities.vo.RegisterVO;
-import com.team69.itproject.entities.vo.UserVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,8 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-//    @PreAuthorize("hasAnyAuthority('normal')")
+    @PreAuthorize("hasAnyAuthority('normal')")
+    @UserAuth(AccessLevel.SELF)
     public ResponseEntity<UsersDTO> getUserByUsername(@PathVariable String username) {
         UsersDTO userByUsername = userDAO.getUserByUsername(username);
         if (userByUsername == null) {

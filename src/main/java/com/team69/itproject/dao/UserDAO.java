@@ -1,6 +1,7 @@
 package com.team69.itproject.dao;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.team69.itproject.entities.dto.UsersDTO;
 import com.team69.itproject.entities.po.UserPO;
 import com.team69.itproject.services.UsersService;
@@ -10,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -32,8 +32,8 @@ public class UserDAO {
     }
 
     public UsersDTO getUserByUsername(String username) {
-        UserPO userPO = usersService.getById(
-                usersService.lambdaQuery()
+        UserPO userPO = usersService.getOne(
+                new LambdaQueryWrapper<UserPO>()
                         .eq(UserPO::getUsername, username)
         );
         if (userPO == null) {
