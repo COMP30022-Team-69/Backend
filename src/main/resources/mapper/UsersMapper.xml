@@ -20,10 +20,18 @@
                 typeHandler="com.team69.itproject.handlers.SimpleGrantTypeHandler"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,username,password,
-        email,status,create_time,
-        remark,expired,locked,
-        credentials_expired,authorities
-    </sql>
+    <resultMap id="DTOResultMap" type="com.team69.itproject.entities.dto.UsersDTO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="authorities" column="authorities" jdbcType="OTHER"
+                javaType="org.springframework.security.core.authority.SimpleGrantedAuthority"
+                typeHandler="com.team69.itproject.handlers.SimpleGrantTypeHandler"/>
+    </resultMap>
+
+    <select id="getUserList" resultMap="DTOResultMap">
+        SELECT * FROM users
+    </select>
 </mapper>

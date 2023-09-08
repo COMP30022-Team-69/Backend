@@ -1,5 +1,6 @@
 package com.team69.itproject.controllers;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team69.itproject.aop.annotations.UserAuth;
 import com.team69.itproject.aop.enums.AccessLevel;
 import com.team69.itproject.dao.UserDAO;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @PreAuthorize("hasAnyAuthority('normal')")
+    @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
     public ResponseEntity<UsersDTO> getUserByUsername(@PathVariable String username) {
         UsersDTO userByUsername = userDAO.getUserByUsername(username);
@@ -42,5 +43,30 @@ public class UserController {
             return ResponseEntity.error(404, null);
         }
         return ResponseEntity.ok(userByUsername);
+    }
+
+    @GetMapping("/list")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public ResponseEntity<Page<UsersDTO>> getUserList(@RequestParam int page,
+                                                      @RequestParam int size) {
+        Page<UsersDTO> userList = userDAO.getUserList(page, size);
+        if (userList == null) {
+            return ResponseEntity.error(404, null);
+        }
+        return ResponseEntity.ok(userList);
+    }
+
+    @PostMapping("/update/email")
+    @PreAuthorize("hasAnyAuthority('normal', 'admin')")
+    @UserAuth(AccessLevel.SELF)
+    public ResponseEntity<String> updateEmail(@RequestBody String email) {
+        return ResponseEntity.ok();
+    }
+
+    @PostMapping("/update/password")
+    @PreAuthorize("hasAnyAuthority('normal', 'admin')")
+    @UserAuth(AccessLevel.SELF)
+    public ResponseEntity<String> updatePassword(@RequestBody String password) {
+        return ResponseEntity.ok();
     }
 }

@@ -38,6 +38,12 @@ custom:
     name: client
     password: feFQ#qf@4g#$%H46J67
 
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+
 ---
 mybatis-plus:
   configuration:
@@ -56,8 +62,15 @@ spring:
 
 ---
 spring:
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    password: redispw
   config:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://127.0.0.1:3378/itporject?serverTimezone=GMT%2B8
+    username: itproject
+    password: cpNdZkh2eZCNpLwN
+    url: jdbc:mysql://localhost:3306/itproject?serverTimezone=GMT%2B8

@@ -3,14 +3,15 @@ package com.team69.itproject.entities.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @ApiModel("用户DTO实体类")
-public class UsersDTO {
+public class UsersDTO implements Serializable {
     /**
      * 用户ID
      */
@@ -45,5 +46,5 @@ public class UsersDTO {
      * 用户权限
      */
     @ApiModelProperty("用户权限")
-    private List<String> authorities;
+    private List<SimpleGrantedAuthority> authorities;
 }

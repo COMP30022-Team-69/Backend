@@ -63,7 +63,7 @@ public class UserPO implements Serializable, UserDetails {
      * 0 for disable, 1 for enable
      */
     @ApiModelProperty(value = "Account state", notes = "0 for disable, 1 for enable")
-    @TableLogic(value = "1", delval = "0")
+    @TableLogic
     @TableField(value = "status")
     @Builder.Default
     private boolean status = true;
