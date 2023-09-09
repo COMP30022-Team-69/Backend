@@ -33,3 +33,4 @@ build/
 .vscode/
 
 /src/main/resources/application-lb.yml
+/src/main/resources/application-wyx.yml

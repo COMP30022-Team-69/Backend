@@ -11,4 +11,6 @@ public interface SongService extends IService<SongPO> {
     Page<SongDTO> getSongList(Page<SongDTO> songPOPage);
 
     Page<SongDTO> getSongByCategory(Page<SongDTO> songPOPage, String category);
+
+    Page<SongDTO> searchSongByName(Page<SongDTO> songPOPage, String name);
 }

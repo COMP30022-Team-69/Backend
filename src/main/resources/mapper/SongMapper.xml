@@ -28,4 +28,16 @@
         SELECT * FROM songs
     </select>
 
+    <select id="getSongByCategory" resultType="com.team69.itproject.entities.dto.SongDTO">
+        SELECT s.*
+        FROM songs s
+                 JOIN song_category_list scl ON s.id = scl.song_id
+                 JOIN category c ON scl.category_id = c.id
+        WHERE c.name = #{category}
+    </select>
+
+    <select id="searchSongByName" resultType="com.team69.itproject.entities.dto.SongDTO">
+        SELECT * FROM songs WHERE name LIKE CONCAT('%', #{name}, '%')
+    </select>
+
 </mapper>

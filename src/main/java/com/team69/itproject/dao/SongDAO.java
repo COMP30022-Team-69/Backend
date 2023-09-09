@@ -7,7 +7,6 @@ import com.team69.itproject.entities.po.SongPO;
 import com.team69.itproject.entities.vo.SongVO;
 import com.team69.itproject.services.SongService;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,11 @@ public class SongDAO {
         SongDTO songDTO = new SongDTO();
         BeanUtil.copyProperties(songPO, songDTO);
         return songDTO;
+    }
+
+    public Page<SongDTO> searchSongByName(String name, int page, int size) {
+        Page<SongDTO> songPOPage = new Page<>(page, size);
+        return songService.searchSongByName(songPOPage, name);
     }
 
     @Cacheable(value = "songList", key = "#page+'-'+#size")
@@ -66,5 +70,11 @@ public class SongDAO {
     )
     public boolean deleteSong(Long id) {
         return songService.removeById(id);
+    }
+
+    @Cacheable(value = "songList", key = "#name+'-'+#page+'-'+#size")
+    public Page<SongDTO> getSongByName(int page, int size, String name) {
+        Page<SongDTO> songPOPage = new Page<>(page, size);
+        return songService.searchSongByName(songPOPage, name);
     }
 }

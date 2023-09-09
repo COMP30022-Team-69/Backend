@@ -23,6 +23,11 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, SongPO>
 
     @Override
     public Page<SongDTO> getSongByCategory(Page<SongDTO> songPOPage, String category) {
-        return null;
+        return songMapper.getSongByCategory(songPOPage, category);
+    }
+
+    @Override
+    public Page<SongDTO> searchSongByName(Page<SongDTO> songPOPage, String name) {
+        return songMapper.searchSongByName(songPOPage, name);
     }
 }

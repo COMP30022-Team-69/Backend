@@ -8,4 +8,8 @@ import com.team69.itproject.entities.po.SongPO;
 public interface SongMapper extends BaseMapper<SongPO> {
 
     Page<SongDTO> getSongList(Page<SongDTO> page);
+
+    Page<SongDTO> getSongByCategory(Page<SongDTO> page, String category);
+
+    Page<SongDTO> searchSongByName(Page<SongDTO> songPOPage, String name);
 }
