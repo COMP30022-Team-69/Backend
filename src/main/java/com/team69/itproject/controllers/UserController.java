@@ -37,7 +37,10 @@ public class UserController {
         return ResponseEntity.error(501, "Register failed");
     }
 
-    @ApiOperation(value = "Get a user by username", authorizations = {@Authorization("normal"), @Authorization("admin")})
+    @ApiOperation(
+            value = "Get a user by username",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/{username}")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
@@ -49,6 +52,10 @@ public class UserController {
         return ResponseEntity.ok(userByUsername);
     }
 
+    @ApiOperation(
+            value = "Get a user by id",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
@@ -60,6 +67,10 @@ public class UserController {
         return ResponseEntity.ok(userById);
     }
 
+    @ApiOperation(
+            value = "Get user list",
+            authorizations = {@Authorization("admin")}
+    )
     @GetMapping("/list")
     @PreAuthorize("hasAnyAuthority('admin')")
     public ResponseEntity<Page<UsersDTO>> getUserList(@RequestParam int page,
@@ -71,6 +82,10 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
+    @ApiOperation(
+            value = "Update User Email",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @PostMapping("/update/email")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
@@ -83,6 +98,10 @@ public class UserController {
         return ResponseEntity.ok();
     }
 
+    @ApiOperation(
+            value = "Update User Password",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @PostMapping("/update/password")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)

@@ -9,6 +9,8 @@ import com.team69.itproject.entities.dto.SongDTO;
 import com.team69.itproject.entities.vo.AddSongToListVO;
 import com.team69.itproject.entities.vo.SongVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,10 @@ public class SongController {
     @Resource
     private SongDAO songDAO;
 
+    @ApiOperation(
+            value = "Get song list",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/list")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     public ResponseEntity<Page<SongDTO>> getSongList(@RequestParam int page,
@@ -35,6 +41,10 @@ public class SongController {
         return ResponseEntity.ok(songList);
     }
 
+    @ApiOperation(
+            value = "Search song by name",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/search/name")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     public ResponseEntity<Page<SongDTO>> getSongByName(@RequestParam int page,
@@ -47,6 +57,10 @@ public class SongController {
         return ResponseEntity.ok(songList);
     }
 
+    @ApiOperation(
+            value = "Get song by category",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/list/category")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     public ResponseEntity<Page<SongDTO>> getSongByCategory(@RequestParam int page,
@@ -59,6 +73,10 @@ public class SongController {
         return ResponseEntity.ok(songList);
     }
 
+    @ApiOperation(
+            value = "Get song by id",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     public ResponseEntity<SongDTO> getSongById(@PathVariable Long id) {
@@ -69,6 +87,10 @@ public class SongController {
         return ResponseEntity.ok(songById);
     }
 
+    @ApiOperation(
+            value = "Add a song",
+            authorizations = {@Authorization("admin")}
+    )
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('admin')")
     public ResponseEntity<String> addSong(@RequestBody SongVO songVO) {
@@ -79,6 +101,10 @@ public class SongController {
         return ResponseEntity.error(501, "Add song failed");
     }
 
+    @ApiOperation(
+            value = "Update a song",
+            authorizations = {@Authorization("admin")}
+    )
     @PostMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('admin')")
     public ResponseEntity<String> updateSong(@PathVariable Long id,
@@ -90,6 +116,10 @@ public class SongController {
         return ResponseEntity.error(501, "Update song failed");
     }
 
+    @ApiOperation(
+            value = "Delete a song",
+            authorizations = {@Authorization("admin")}
+    )
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('admin')")
     public ResponseEntity<String> deleteSong(@PathVariable Long id) {
@@ -100,6 +130,10 @@ public class SongController {
         return ResponseEntity.error(501, "Delete song failed");
     }
 
+    @ApiOperation(
+            value = "Add a song to user's song list",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @PostMapping("/addSongToList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth(AccessLevel.SELF)
@@ -113,6 +147,10 @@ public class SongController {
         return ResponseEntity.ok();
     }
 
+    @ApiOperation(
+            value = "Delete a song from user's song list",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
     @PostMapping("/deleteSongFromList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth(AccessLevel.SELF)
