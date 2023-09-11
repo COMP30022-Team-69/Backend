@@ -25,7 +25,8 @@
     </resultMap>
 
     <select id="getSongList" resultMap="DTOResultMap">
-        SELECT * FROM songs
+        SELECT *
+        FROM songs
     </select>
 
     <select id="getSongByCategory" resultType="com.team69.itproject.entities.dto.SongDTO">
@@ -37,7 +38,17 @@
     </select>
 
     <select id="searchSongByName" resultType="com.team69.itproject.entities.dto.SongDTO">
-        SELECT * FROM songs WHERE name LIKE CONCAT('%', #{name}, '%')
+        SELECT *
+        FROM songs
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+    </select>
+
+    <select id="getUserSongListByName" resultType="com.team69.itproject.entities.dto.SongDTO">
+        SELECT s.*
+        FROM songs s
+                 JOIN user_song_list usl ON s.id = usl.song_id
+        WHERE usl.user_id = #{userId}
+          AND usl.name = #{name};
     </select>
 
 </mapper>

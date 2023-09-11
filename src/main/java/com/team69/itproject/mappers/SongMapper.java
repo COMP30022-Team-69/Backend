@@ -12,4 +12,7 @@ public interface SongMapper extends BaseMapper<SongPO> {
     Page<SongDTO> getSongByCategory(Page<SongDTO> page, String category);
 
     Page<SongDTO> searchSongByName(Page<SongDTO> songPOPage, String name);
+
+    Page<SongDTO> getUserSongListByName(Page<SongDTO> songPOPage, Long userId, String name);
+
 }

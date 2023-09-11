@@ -1,18 +1,26 @@
 package com.team69.itproject.controllers;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.team69.itproject.aop.annotations.UserAuth;
+import com.team69.itproject.aop.enums.AccessLevel;
 import com.team69.itproject.dao.SongDAO;
 import com.team69.itproject.entities.bo.ResponseEntity;
 import com.team69.itproject.entities.dto.SongDTO;
+import com.team69.itproject.entities.vo.AddSongToListVO;
 import com.team69.itproject.entities.vo.SongVO;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
+@Api(tags = "Song APIs")
 @RestController
 @RequestMapping("/song")
 public class SongController {
+    private final List<String> listName = Arrays.asList("Background", "Sleep", "Relax", "Favorite");
     @Resource
     private SongDAO songDAO;
 
@@ -92,4 +100,29 @@ public class SongController {
         return ResponseEntity.error(501, "Delete song failed");
     }
 
+    @PostMapping("/addSongToList")
+    @PreAuthorize("hasAnyAuthority('admin', 'normal')")
+    @UserAuth(AccessLevel.SELF)
+    public ResponseEntity<String> addSongToList(@RequestHeader("userId") Long userId,
+                                                @RequestBody AddSongToListVO addSongToListVO) {
+        String songListName = addSongToListVO.getSongListName();
+        if (!listName.contains(songListName)) {
+            return ResponseEntity.error(501, "Song list name is not allowed");
+        }
+        songDAO.addSongToUserSongList(userId, songListName, addSongToListVO.getSongIdList());
+        return ResponseEntity.ok();
+    }
+
+    @PostMapping("/deleteSongFromList")
+    @PreAuthorize("hasAnyAuthority('admin', 'normal')")
+    @UserAuth(AccessLevel.SELF)
+    public ResponseEntity<String> deleteSongFromList(@RequestHeader("userId") Long userId,
+                                                     @RequestBody AddSongToListVO addSongToListVO) {
+        String songListName = addSongToListVO.getSongListName();
+        if (!listName.contains(songListName)) {
+            return ResponseEntity.error(501, "Song list name is not allowed");
+        }
+        songDAO.removeSongFromUserSongList(userId, songListName, addSongToListVO.getSongIdList());
+        return ResponseEntity.ok();
+    }
 }

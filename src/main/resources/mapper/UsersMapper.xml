@@ -32,6 +32,7 @@
     </resultMap>
 
     <select id="getUserList" resultMap="DTOResultMap">
-        SELECT * FROM users
+        SELECT *
+        FROM users
     </select>
 </mapper>

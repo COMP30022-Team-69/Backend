@@ -30,4 +30,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, SongPO>
     public Page<SongDTO> searchSongByName(Page<SongDTO> songPOPage, String name) {
         return songMapper.searchSongByName(songPOPage, name);
     }
+
+    @Override
+    public Page<SongDTO> getUserSongListByName(Page<SongDTO> songPOPage, Long userId, String name) {
+        return songMapper.getUserSongListByName(songPOPage, userId, name);
+    }
 }

@@ -10,41 +10,43 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@ApiModel("用户DTO实体类")
+@ApiModel("User Data Transfer Object")
 public class UsersDTO implements Serializable {
     /**
-     * 用户ID
+     * User ID
      */
-    @ApiModelProperty("用户ID")
+    @ApiModelProperty("User ID")
     private Long id;
     /**
-     * 用户登录账号
+     * Username
+     * Unique, used for login
      */
-    @ApiModelProperty(value = "用户名", notes = "唯一，用于登陆")
+    @ApiModelProperty(value = "Username", notes = "Unique, used for login")
     private String username;
     /**
-     * 等级ID
+     * User email
      */
-    @ApiModelProperty("用户等级ID")
-    private Long gradeId;
+    @ApiModelProperty("User Email")
+    private String email;
     /**
-     * 状态，0禁用，1启用
+     * Account state
+     * 0 for disable, 1 for enable
      */
-    @ApiModelProperty(value = "账户状态", notes = "0禁用，1启用")
+    @ApiModelProperty(value = "Account state", notes = "0 for disable, 1 for enable")
     private boolean status;
     /**
-     * 创建时间
+     * Created time
      */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("Created time")
     private LocalDateTime createTime;
     /**
-     * 用户备注
+     * User remark
      */
-    @ApiModelProperty("用户备注")
+    @ApiModelProperty("User remark")
     private String remark;
     /**
-     * 用户权限
+     * User authorities
      */
-    @ApiModelProperty("用户权限")
+    @ApiModelProperty("User authorities")
     private List<SimpleGrantedAuthority> authorities;
 }
