@@ -137,7 +137,7 @@ public class SongController {
     @PostMapping("/addSongToList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> addSongToList(@RequestHeader("userId") Long userId,
+    public ResponseEntity<String> addSongToList(@RequestHeader("User-Id") Long userId,
                                                 @RequestBody AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();
         if (!listName.contains(songListName)) {
@@ -154,7 +154,7 @@ public class SongController {
     @PostMapping("/deleteSongFromList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> deleteSongFromList(@RequestHeader("userId") Long userId,
+    public ResponseEntity<String> deleteSongFromList(@RequestHeader("User-Id") Long userId,
                                                      @RequestBody AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();
         if (!listName.contains(songListName)) {

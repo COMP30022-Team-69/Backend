@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<UsersDTO> getUserById(@RequestHeader("userId") Long userId) {
+    public ResponseEntity<UsersDTO> getUserById(@RequestHeader("User-Id") Long userId) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
             return ResponseEntity.error(404, null);
@@ -89,7 +89,7 @@ public class UserController {
     @PostMapping("/update/email")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> updateEmail(@RequestHeader("userId") Long userId, @RequestBody String email) {
+    public ResponseEntity<String> updateEmail(@RequestHeader("User-Id") Long userId, @RequestBody String email) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
             return ResponseEntity.error(404, null);
@@ -105,7 +105,7 @@ public class UserController {
     @PostMapping("/update/password")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> updatePassword(@RequestHeader("userId") Long userId, @RequestBody String password) {
+    public ResponseEntity<String> updatePassword(@RequestHeader("User-Id") Long userId, @RequestBody String password) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
             return ResponseEntity.error(404, null);

@@ -47,7 +47,7 @@ public class UserAuthAspect {
         UserAuth annotation = methodSignature.getMethod().getAnnotation(UserAuth.class);
         switch (annotation.value()) {
             case SELF -> {
-                String userId = request.getHeader("userId");
+                String userId = request.getHeader("User-Id");
                 if (!userId.equals(id)) {
                     throw new BusinessException(401, "User ID not match");
                 }

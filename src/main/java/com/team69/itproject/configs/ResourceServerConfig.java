@@ -54,7 +54,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**",
                         "/send/callback",
-                        "/oauth/**",
+                        "/oauth/token",
                         "/user/register")
                 .permitAll()
                 .anyRequest()
@@ -77,7 +77,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(
                 Arrays.asList(
-                        "http://localhost:8081"
+                        "http://localhost:3000"
                 )
         );
         config.setAllowCredentials(true);
