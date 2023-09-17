@@ -21,27 +21,27 @@ import java.time.LocalDate;
 @ApiModel("Song Persistent Object")
 public class SongPO {
 
-    @ApiModelProperty("Song ID")
+    @ApiModelProperty(value ="Song ID",notes = "ID of song, auto-generated")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("Song Name")
+    @ApiModelProperty(value ="Song Name",notes ="Name of the song")
     @TableField(value = "name")
     private String name;
 
-    @ApiModelProperty("Song Description")
+    @ApiModelProperty(value ="Song Description",notes ="Brief description of the song")
     @TableField(value = "description")
     private String description;
 
-    @ApiModelProperty("Song Author")
+    @ApiModelProperty(value ="Song Author",notes = "Author of the song")
     @TableField(value = "author")
     private String author;
 
-    @ApiModelProperty("Song Release Date")
+    @ApiModelProperty(value ="Song Release Date",notes = "Date when the song is firstly released")
     @TableField(value = "release_date")
     private LocalDate releaseDate;
 
-    @ApiModelProperty("Song Create Time")
+    @ApiModelProperty(value ="Song Create Time",notes = "Date when the song is created")
     @TableField(value = "create_time")
     @Builder.Default
     private LocalDate createTime = LocalDate.now();

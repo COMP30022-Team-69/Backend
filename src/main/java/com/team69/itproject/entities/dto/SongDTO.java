@@ -14,22 +14,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class SongDTO {
 
-    @ApiModelProperty("Song ID")
+    @ApiModelProperty(value ="Song ID", notes = "ID of song")
     private Long id;
 
-    @ApiModelProperty("Song Name")
+    @ApiModelProperty(value ="Song Name", notes = "Name of song")
     private String name;
 
-    @ApiModelProperty("Song Description")
+    @ApiModelProperty(value ="Song Description", notes = "Detail of the song, any text description")
     private String description;
 
-    @ApiModelProperty("Song Author")
+    @ApiModelProperty(value ="Song Author", notes = "Creater of the song")
     private String author;
 
-    @ApiModelProperty("Song Release Date")
+    @ApiModelProperty(value ="Song Release Date", notes = "First time release date of the song")
     private LocalDate releaseDate;
 
-    @ApiModelProperty("Song Create Time")
+    @ApiModelProperty(value ="Song Create Time", notes = "Date when the song is created")
     @Builder.Default
     private LocalDate createTime = LocalDate.now();
 

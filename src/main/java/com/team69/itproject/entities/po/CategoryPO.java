@@ -18,24 +18,24 @@ import java.time.LocalDateTime;
 @ApiModel("Category Persistent Object")
 public class CategoryPO {
 
-    @ApiModelProperty("Category ID")
+    @ApiModelProperty(value ="Category ID",notes = "ID of category, auto-generated")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("Category Name")
+    @ApiModelProperty(value ="Category Name",notes = "Category's name")
     @TableField(value = "name")
     private String name;
 
-    @ApiModelProperty("Category Description")
+    @ApiModelProperty(value ="Category Description",notes = "Brief description of the category")
     @TableField(value = "description")
     private String description;
 
-    @ApiModelProperty("Create Time")
+    @ApiModelProperty(value ="Create Time",notes = "Time when the category is created")
     @TableField(value = "create_time")
     @Builder.Default
     private LocalDateTime createTime = LocalDateTime.now();
 
-    @ApiModelProperty("Song Count")
+    @ApiModelProperty(value ="Song Count",notes = "number of songs in this category")
     @TableField(value = "song_count")
     private Integer songCount = 0;
 

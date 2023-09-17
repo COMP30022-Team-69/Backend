@@ -36,7 +36,7 @@ public class UserPO implements Serializable, UserDetails {
     /**
      * User ID
      */
-    @ApiModelProperty("User ID")
+    @ApiModelProperty(value ="User ID", notes = "Auto-generated user id")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
@@ -49,13 +49,13 @@ public class UserPO implements Serializable, UserDetails {
     /**
      * User password
      */
-    @ApiModelProperty("User password")
+    @ApiModelProperty(value ="User password", notes = "Password of user")
     @TableField(value = "password")
     private String password;
     /**
      * User Email
      */
-    @ApiModelProperty("User Email")
+    @ApiModelProperty(value ="User Email", notes = "User's email")
     @TableField(value = "email")
     private String email;
     /**
@@ -70,41 +70,41 @@ public class UserPO implements Serializable, UserDetails {
     /**
      * Created time
      */
-    @ApiModelProperty("Created time")
+    @ApiModelProperty(value ="Created time", notes ="Date when user is created")
     @TableField(value = "create_time")
     @Builder.Default
     private LocalDateTime createTime = LocalDateTime.now();
     /**
      * User remark
      */
-    @ApiModelProperty("User remark")
+    @ApiModelProperty(value ="User remark", notes = "Some information about user")
     @TableField(value = "remark")
     private String remark = "";
     /**
      * If the account is expired
      */
-    @ApiModelProperty("If the account is expired")
+    @ApiModelProperty(value ="If the account is expired")
     @TableField(value = "expired")
     @Builder.Default
     private boolean expired = false;
     /**
      * If the account is locked
      */
-    @ApiModelProperty("If the account is locked")
+    @ApiModelProperty(value ="If the account is locked")
     @TableField(value = "locked")
     @Builder.Default
     private boolean locked = false;
     /**
      * If the credentials is expired
      */
-    @ApiModelProperty("If the credentials is expired")
+    @ApiModelProperty(value ="If the credentials is expired")
     @TableField(value = "credentials_expired")
     @Builder.Default
     private boolean credentialsExpired = false;
     /**
      * User authorities
      */
-    @ApiModelProperty("User authorities")
+    @ApiModelProperty(value ="User authorities", notes = "The user's authorities")
     @TableField(value = "authorities", typeHandler = SimpleGrantTypeHandler.class)
     private List<SimpleGrantedAuthority> authorities;
 
