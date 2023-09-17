@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Map;
 
 @Api(tags = "User APIs")
 @RestController
@@ -89,12 +90,12 @@ public class UserController {
     @PostMapping("/update/email")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> updateEmail(@RequestHeader("User-Id") Long userId, @RequestBody String email) {
+    public ResponseEntity<String> updateEmail(@RequestHeader("User-Id") Long userId, @RequestBody Map<String, String> data) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
             return ResponseEntity.error(404, null);
         }
-        userDAO.updateUserEmail(userId, email);
+        userDAO.updateUserEmail(userId, data.get("email"));
         return ResponseEntity.ok();
     }
 
@@ -105,12 +106,12 @@ public class UserController {
     @PostMapping("/update/password")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
     @UserAuth(AccessLevel.SELF)
-    public ResponseEntity<String> updatePassword(@RequestHeader("User-Id") Long userId, @RequestBody String password) {
+    public ResponseEntity<String> updatePassword(@RequestHeader("User-Id") Long userId, @RequestBody Map<String, String> data) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
             return ResponseEntity.error(404, null);
         }
-        userDAO.updateUserPassword(userId, password);
+        userDAO.updateUserPassword(userId, data.get("password"));
         return ResponseEntity.ok();
     }
 }
