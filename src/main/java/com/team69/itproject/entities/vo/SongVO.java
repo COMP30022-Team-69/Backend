@@ -14,15 +14,15 @@ import java.time.LocalDate;
 @ApiModel("Song Value Object")
 public class SongVO {
 
-    @ApiModelProperty("Song Name")
+    @ApiModelProperty(value="Song Name", notes = "Name of the song in question")
     private String name;
 
-    @ApiModelProperty("Song Description")
+    @ApiModelProperty(value="Song Description", notes ="Text description of the song")
     private String description;
 
-    @ApiModelProperty("Song Author")
+    @ApiModelProperty(value="Song Author", notes ="Author of the song")
     private String author;
 
-    @ApiModelProperty("Song Release Date")
+    @ApiModelProperty(value="Song Release Date", notes = "Date when the song is released")
     private LocalDate releaseDate;
 }

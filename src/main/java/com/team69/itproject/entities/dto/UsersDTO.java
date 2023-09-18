@@ -15,18 +15,18 @@ public class UsersDTO implements Serializable {
     /**
      * User ID
      */
-    @ApiModelProperty("User ID")
+    @ApiModelProperty(value ="User ID", notes = "ID of user, auto-generated")
     private Long id;
     /**
      * Username
      * Unique, used for login
      */
-    @ApiModelProperty(value = "Username", notes = "Unique, used for login")
+    @ApiModelProperty(value = "Username", notes = "Unique username, used for login")
     private String username;
     /**
      * User email
      */
-    @ApiModelProperty("User Email")
+    @ApiModelProperty(value ="User Email", notes = "User Email for verification")
     private String email;
     /**
      * Account state
@@ -37,12 +37,12 @@ public class UsersDTO implements Serializable {
     /**
      * Created time
      */
-    @ApiModelProperty("Created time")
+    @ApiModelProperty(value ="Created time", notes = "Date when the account is created")
     private LocalDateTime createTime;
     /**
      * User remark
      */
-    @ApiModelProperty("User remark")
+    @ApiModelProperty(value ="User remark")
     private String remark;
     /**
      * User authorities
