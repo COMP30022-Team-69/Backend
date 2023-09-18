@@ -56,11 +56,16 @@ class ItProjectApplicationTests {
             when(songDAO.addSong(any())).thenReturn(true);
 
             SongVO songVO = new SongVO();
-            // 设置 songVO 的字段
             mockMvc.perform(post("/song/add")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(asJsonString(songVO)))
                     .andExpect(status().isOk());
+        }
+        public void testAddSong_NoAdminRights() throws Exception {
+            mockMvc.perform(post("/song/add")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(asJsonString(new SongVO())))
+                    .andExpect(status().isForbidden());
         }
 
         public static String asJsonString(final Object obj) {
