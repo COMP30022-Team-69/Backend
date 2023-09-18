@@ -44,7 +44,7 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         TokenEnhancerChain chain = new TokenEnhancerChain();
         List<TokenEnhancer> delegates = new ArrayList<>();
         delegates.add(jwtTokenCustomEnhancer);
@@ -64,14 +64,14 @@ public class OAuth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .withClient(clientName)
                 .secret(passwordEncoder.encode(clientPassword))
                 .scopes("all")
-                .accessTokenValiditySeconds(86400)
-                .refreshTokenValiditySeconds(604800)
+                .accessTokenValiditySeconds(2147483647)
+                .refreshTokenValiditySeconds(2147483647)
                 .authorizedGrantTypes("authorization_code", "password", "refresh_token")
                 .autoApprove(false);
     }
 
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         security.tokenKeyAccess("isAuthenticated()");
         security.checkTokenAccess("permitAll()");
     }

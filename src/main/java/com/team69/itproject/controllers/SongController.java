@@ -131,6 +131,24 @@ public class SongController {
     }
 
     @ApiOperation(
+            value = "Get a user's song list",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
+    @PostMapping("/userSongList")
+    @PreAuthorize("hasAnyAuthority('admin', 'normal')")
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
+    public ResponseEntity<Page<SongDTO>> getUserSongList(@RequestHeader("User-Id") Long id,
+                                                         @RequestParam int page,
+                                                         @RequestParam int size,
+                                                         @RequestParam String songListName) {
+        Page<SongDTO> songList = songDAO.getUserSongListByName(id, songListName, page, size);
+        if (songList == null) {
+            return ResponseEntity.error(404, null);
+        }
+        return ResponseEntity.ok(songList);
+    }
+
+    @ApiOperation(
             value = "Add a song to user's song list",
             authorizations = {@Authorization("normal"), @Authorization("admin")}
     )
