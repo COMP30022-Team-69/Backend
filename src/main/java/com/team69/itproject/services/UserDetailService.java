@@ -39,17 +39,16 @@ public class UserDetailService implements UserDetailsService {
         );
         log.debug(JSON.toJSONString(userPO));
         if (userPO == null) {
-            throw new UsernameNotFoundException("用户名或者密码错误！");
+            throw new UsernameNotFoundException("Username or password is incorrect!");
         }
-        // 下面抛出的异常 Spring Security 会自动捕获并进行返回
         if (!userPO.isEnabled()) {
-            throw new DisabledException("此账户已被禁用！");
+            throw new DisabledException("This account has been disabled!");
         } else if (!userPO.isAccountNonLocked()) {
-            throw new LockedException("此账户已被锁定！");
+            throw new LockedException("This account has been locked!");
         } else if (!userPO.isAccountNonExpired()) {
-            throw new AccountExpiredException("此账户已过期！");
+            throw new AccountExpiredException("This account has expired!");
         } else if (!userPO.isCredentialsNonExpired()) {
-            throw new CredentialsExpiredException("此账户凭证已过期！");
+            throw new CredentialsExpiredException("This account credentials has expired!");
         }
         return userPO;
     }
