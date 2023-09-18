@@ -1,6 +1,7 @@
 package com.team69.itproject.aop;
 
 import com.team69.itproject.aop.annotations.UserAuth;
+import com.team69.itproject.aop.enums.AccessLevel;
 import com.team69.itproject.exceptions.BusinessException;
 import com.team69.itproject.utils.PublicUtils;
 import io.jsonwebtoken.Claims;
@@ -45,19 +46,27 @@ public class UserAuthAspect {
             return joinPoint.proceed();
         }
         UserAuth annotation = methodSignature.getMethod().getAnnotation(UserAuth.class);
-        switch (annotation.value()) {
-            case SELF -> {
-                String userId = request.getHeader("User-Id");
-                if (!userId.equals(id)) {
-                    throw new BusinessException(401, "User ID not match");
-                }
-            }
-            case PUBLIC -> {
-                // do nothing
+        for (AccessLevel accessLevel : annotation.value()) {
+            if (handleUserLevel(accessLevel, id, request) || handleAdminLevel(accessLevel, claims)) {
+                return joinPoint.proceed();
             }
         }
+        return null;
+    }
 
-        log.debug("UserID : {}", id);
-        return joinPoint.proceed();
+    private boolean handleUserLevel(AccessLevel accessLevel, String id, HttpServletRequest request){
+        if (accessLevel.equals(AccessLevel.SELF)){
+            String userId = request.getHeader("User-Id");
+            return userId.equals(id);
+        }
+        return false;
+    }
+
+    private boolean handleAdminLevel(AccessLevel accessLevel, Claims claims){
+        if (accessLevel.equals(AccessLevel.ADMIN)){
+            String role = claims.get("role").toString();
+            return role.contains("admin");
+        }
+        return false;
     }
 }

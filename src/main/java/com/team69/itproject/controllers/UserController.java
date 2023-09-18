@@ -44,7 +44,7 @@ public class UserController {
     )
     @GetMapping("/{username}")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<UsersDTO> getUserByUsername(@PathVariable String username) {
         UsersDTO userByUsername = userDAO.getUserByUsername(username);
         if (userByUsername == null) {
@@ -59,7 +59,7 @@ public class UserController {
     )
     @GetMapping("/")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<UsersDTO> getUserById(@RequestHeader("User-Id") Long userId) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
@@ -89,7 +89,7 @@ public class UserController {
     )
     @PostMapping("/update/email")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> updateEmail(@RequestHeader("User-Id") Long userId, @RequestBody Map<String, String> data) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {
@@ -105,7 +105,7 @@ public class UserController {
     )
     @PostMapping("/update/password")
     @PreAuthorize("hasAnyAuthority('normal', 'admin')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> updatePassword(@RequestHeader("User-Id") Long userId, @RequestBody Map<String, String> data) {
         UsersDTO userById = userDAO.getUserById(userId);
         if (userById == null) {

@@ -136,7 +136,7 @@ public class SongController {
     )
     @PostMapping("/addSongToList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> addSongToList(@RequestHeader("User-Id") Long userId,
                                                 @RequestBody AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();
@@ -153,7 +153,7 @@ public class SongController {
     )
     @PostMapping("/deleteSongFromList")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    @UserAuth(AccessLevel.SELF)
+    @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> deleteSongFromList(@RequestHeader("User-Id") Long userId,
                                                      @RequestBody AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();

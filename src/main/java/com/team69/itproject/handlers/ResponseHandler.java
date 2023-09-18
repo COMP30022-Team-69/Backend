@@ -11,6 +11,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.Objects;
+
 @Log4j2
 @RestControllerAdvice
 public class ResponseHandler implements ResponseBodyAdvice<Object> {
@@ -27,14 +29,9 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
         }
         log.info("Response out: class = {} content = {}", body.getClass().getSimpleName(), body);
         if (body.getClass().getPackage().getName().contains("com.team69.itproject")) {
-            if (body instanceof ResponseEntity) {
-                ResponseEntity<?> responseEntity = (ResponseEntity<?>) body;
+            if (body instanceof ResponseEntity<?> responseEntity) {
                 HttpStatus httpStatus = HttpStatus.resolve(responseEntity.getCode());
-                if (httpStatus != null) {
-                    response.setStatusCode(httpStatus);
-                } else {
-                    response.setStatusCode(HttpStatus.OK);
-                }
+                response.setStatusCode(Objects.requireNonNullElse(httpStatus, HttpStatus.OK));
                 return body;
             }
             return ResponseEntity.ok(body);
