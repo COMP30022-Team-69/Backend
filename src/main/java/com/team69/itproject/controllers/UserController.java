@@ -1,21 +1,21 @@
 package com.team69.itproject.controllers;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.team69.itproject.aop.annotations.UserAuth;
-import com.team69.itproject.aop.enums.AccessLevel;
-import com.team69.itproject.dao.UserDAO;
-import com.team69.itproject.entities.bo.ResponseEntity;
-import com.team69.itproject.entities.dto.UsersDTO;
-import com.team69.itproject.entities.vo.RegisterVO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+        import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+        import com.team69.itproject.aop.annotations.UserAuth;
+        import com.team69.itproject.aop.enums.AccessLevel;
+        import com.team69.itproject.dao.UserDAO;
+        import com.team69.itproject.entities.bo.ResponseEntity;
+        import com.team69.itproject.entities.dto.UsersDTO;
+        import com.team69.itproject.entities.vo.RegisterVO;
+        import io.swagger.annotations.Api;
+        import io.swagger.annotations.ApiOperation;
+        import io.swagger.annotations.Authorization;
+        import org.springframework.security.access.prepost.PreAuthorize;
+        import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.Map;
+        import javax.annotation.Resource;
+        import javax.validation.Valid;
+        import java.util.Map;
 
 @Api(tags = "User APIs")
 @RestController
