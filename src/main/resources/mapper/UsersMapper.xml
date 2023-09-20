@@ -35,4 +35,8 @@
         SELECT *
         FROM users
     </select>
+
+    <update id="cleanUserList">
+        DELETE FROM users
+    </update>
 </mapper>

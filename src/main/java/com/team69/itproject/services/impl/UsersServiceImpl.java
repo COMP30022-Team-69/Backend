@@ -25,6 +25,12 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, UserPO>
     public Page<UsersDTO> getUserList(Page<UsersDTO> page) {
         return usersMapper.getUserList(page);
     }
+
+
+    @Override
+    public void clearUserList(Page<UsersDTO> page) {
+        usersMapper.cleanUserList(page);
+    }
 }
 
 
