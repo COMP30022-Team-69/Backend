@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("lb")
+@ActiveProfiles("wyx")
 class UserDAOTests {
 
     @Autowired
@@ -85,8 +85,10 @@ class UserDAOTests {
                 .authorities(List.of(new SimpleGrantedAuthority("normal")))
                 .build();
         usersService.save(newUser);
-        UsersDTO xn = userDAO.getUserByUsername("xuaniu");
-        assert(xn.getUsername().equals("Xuanniu"));
+        UsersDTO xn = userDAO.getUserByUsername("Xuanniu");
+        assertArrayEquals(xn.getUsername().toCharArray(),"Xuanniu".toCharArray());
+        xn = userDAO.getUserByUsername("Xuanzhu");
+        assert(xn == null);
     }
 
     @Test
@@ -157,9 +159,8 @@ class UserDAOTests {
         );
         long id = xn.getId();
         userDAO.updateUserPassword(id,encodedPassword);
-        xn = usersService.getById(id);
-        System.out.println(xn.getPassword());
-        System.out.println(encodedPassword);
+        UserPO xn1 = usersService.getById(id);
+        assert(!xn1.getPassword().equals(xn.getPassword()));
     }
 
 }
