@@ -51,16 +51,16 @@ class UserDAOTests {
     }
 
     @Test
-    @Transactional
-    @Rollback
+    //@Transactional
+    //@Rollback
     void testGetUserList() {
         deleteAllUser();
         ArrayList<String> names = new ArrayList<>();
         int n = 20;
         for (Integer i = 0; i < n; i++) {
-            names.add("Xuanniu" + i.toString());
+            names.add("Xuanniu" + i);
             UserPO newUser = UserPO.builder()
-                    .username("Xuanniu" + (i.toString()))
+                    .username("Xuanniu" + i)
                     .email("aaa@gmail.com")
                     .password(passwordEncoder.encode("123456"))
                     .authorities(List.of(new SimpleGrantedAuthority("normal")))
@@ -87,7 +87,7 @@ class UserDAOTests {
                 .authorities(List.of(new SimpleGrantedAuthority("normal")))
                 .build();
         usersService.save(newUser);
-        UsersDTO xn = userDAO.getUserByUsername("xuaniu");
+        UsersDTO xn = userDAO.getUserByUsername("Xuanniu");
         assert(xn.getUsername().equals("Xuanniu"));
     }
 
