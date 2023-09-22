@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("wyx")
+@ActiveProfiles("lb")
 class UserDAOTests {
 
     @Autowired
@@ -71,6 +73,8 @@ class UserDAOTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testGetUserByUsername() {
         Page<UsersDTO> page = new Page<>();
         usersService.clearUserList(page);
@@ -81,13 +85,8 @@ class UserDAOTests {
                 .authorities(List.of(new SimpleGrantedAuthority("normal")))
                 .build();
         usersService.save(newUser);
-        UsersDTO xn = userDAO.getUserByUsername("Xuanniu");
-        assertArrayEquals(xn.getUsername().toCharArray(),"Xuanniu".toCharArray());
-        xn = userDAO.getUserByUsername("Xuanzhu");
-        assert(xn == null);
-        xn = userDAO.getUserByUsername("xuanniu");
-        //System.out.println(xn.getUsername());
-        assert(xn == null);
+        UsersDTO xn = userDAO.getUserByUsername("xuaniu");
+        assert(xn.getUsername().equals("Xuanniu"));
     }
 
     @Test

@@ -34,7 +34,7 @@ public class UserDAO {
 
     @Cacheable(value = "users", key = "'-list-'+#page+'-'+#size")
     public Page<UsersDTO> getUserList(int page, int size) {
-        Page<UsersDTO> usersDTOPage = new Page<>();
+        Page<UsersDTO> usersDTOPage = new Page<>(page, size);
         return usersService.getUserList(usersDTOPage);
     }
 
