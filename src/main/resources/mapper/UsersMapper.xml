@@ -34,9 +34,6 @@
     <select id="getUserList" resultMap="DTOResultMap">
         SELECT *
         FROM users
+        WHERE status = 1
     </select>
-
-    <update id="cleanUserList">
-        DELETE FROM users
-    </update>
 </mapper>

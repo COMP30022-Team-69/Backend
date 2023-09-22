@@ -14,7 +14,6 @@ import com.team69.itproject.entities.po.UserPO;
 public interface UsersMapper extends BaseMapper<UserPO> {
 
     Page<UsersDTO> getUserList(Page<UsersDTO> page);
-    void cleanUserList(Page<UsersDTO> page);
 }
 
 

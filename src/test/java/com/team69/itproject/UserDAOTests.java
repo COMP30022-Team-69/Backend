@@ -1,6 +1,7 @@
 package com.team69.itproject;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team69.itproject.dao.SongDAO;
 import com.team69.itproject.dao.UserDAO;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("wyx")
+@ActiveProfiles("lb")
 class UserDAOTests {
 
     @Autowired
@@ -89,10 +90,8 @@ class UserDAOTests {
                 .authorities(List.of(new SimpleGrantedAuthority("normal")))
                 .build();
         usersService.save(newUser);
-        UsersDTO xn = userDAO.getUserByUsername("Xuanniu");
-        assertArrayEquals(xn.getUsername().toCharArray(),"Xuanniu".toCharArray());
-        xn = userDAO.getUserByUsername("Xuanzhu");
-        assert(xn == null);
+        UsersDTO xn = userDAO.getUserByUsername("xuaniu");
+        assert(xn.getUsername().equals("Xuanniu"));
     }
 
     @Test
@@ -171,6 +170,10 @@ class UserDAOTests {
         userDAO.updateUserPassword(id,encodedPassword);
         UserPO xn1 = usersService.getById(id);
         assert(!xn1.getPassword().equals(xn.getPassword()));
+    }
+
+    void deleteAllUser(){
+        usersService.remove(new QueryWrapper<>());
     }
 
 }

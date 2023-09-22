@@ -27,6 +27,7 @@
     <select id="getSongList" resultMap="DTOResultMap">
         SELECT *
         FROM songs
+        WHERE status = 1
     </select>
 
     <select id="getSongByCategory" resultType="com.team69.itproject.entities.dto.SongDTO">
@@ -34,13 +35,13 @@
         FROM songs s
                  JOIN song_category_list scl ON s.id = scl.song_id
                  JOIN category c ON scl.category_id = c.id
-        WHERE c.name = #{category}
+        WHERE c.name = #{category} AND c.status = 1 AND s.status = 1
     </select>
 
     <select id="searchSongByName" resultType="com.team69.itproject.entities.dto.SongDTO">
         SELECT *
         FROM songs
-        WHERE name LIKE CONCAT('%', #{name}, '%')
+        WHERE name LIKE CONCAT('%', #{name}, '%') AND status = 1
     </select>
 
     <select id="getUserSongListByName" resultType="com.team69.itproject.entities.dto.SongDTO">
@@ -48,7 +49,8 @@
         FROM songs s
                  JOIN user_song_list usl ON s.id = usl.song_id
         WHERE usl.user_id = #{userId}
-          AND usl.name = #{name};
+          AND usl.name = #{name}
+          AND status = 1;
     </select>
 
 </mapper>

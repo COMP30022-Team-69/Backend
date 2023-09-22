@@ -2,6 +2,7 @@ package com.team69.itproject;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.team69.itproject.dao.SongDAO;
 import com.team69.itproject.dao.UserDAO;
@@ -31,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("wyx")
+@ActiveProfiles("lb")
 class SongDAOTests {
 
     @Autowired
@@ -55,6 +56,10 @@ class SongDAOTests {
 
         SongDTO song = songDAO.getSongById(id);
         System.out.println(song.getName());
+    }
+
+    void deleteAllSong(){
+        songService.remove(new QueryWrapper<>());
     }
 
 }
