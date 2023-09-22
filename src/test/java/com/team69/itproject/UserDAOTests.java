@@ -36,6 +36,8 @@ class UserDAOTests {
     private PasswordEncoder passwordEncoder;
 
     @Test
+    @Transactional
+    @Rollback
     void testAddUser() {
         Page<UsersDTO> page = new Page<>();
         usersService.clearUserList(page);
@@ -49,6 +51,8 @@ class UserDAOTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testGetUserList() {
         Page<UsersDTO> page = new Page<>();
         usersService.clearUserList(page);
@@ -64,9 +68,9 @@ class UserDAOTests {
                     .build();
             usersService.save(newUser);
         }
-        Page<UsersDTO> pages = userDAO.getUserList(200, 200);
+        Page<UsersDTO> pages = userDAO.getUserList(1, 20);
         for (int i = 0; i < n; i++) {
-            //System.out.println(pages.getRecords().get(i).getUsername());
+            System.out.println(pages.getRecords().get(i).getUsername());
             //UsersDTO xn0 = userDAO.getUserByUsername("Xuanniu0");
             assertArrayEquals(pages.getRecords().get(i).getUsername().toCharArray(), names.get(i).toCharArray());
         }
@@ -92,6 +96,8 @@ class UserDAOTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testGetUserById() {
         String name = "Xuanniu";
         Page<UsersDTO> page = new Page<>();
@@ -117,6 +123,8 @@ class UserDAOTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testUpdateUserEmail() {
         String name = "Xuanniu";
         String email = "bbb@outlook.com";
@@ -140,6 +148,8 @@ class UserDAOTests {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testUpdateUserPassword() {
         String name = "Xuanniu";
         String password = "cnji257856f";
