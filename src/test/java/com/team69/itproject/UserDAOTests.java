@@ -51,8 +51,8 @@ class UserDAOTests {
     }
 
     @Test
-    //@Transactional
-    //@Rollback
+    @Transactional
+    @Rollback
     void testGetUserList() {
         deleteAllUser();
         ArrayList<String> names = new ArrayList<>();
