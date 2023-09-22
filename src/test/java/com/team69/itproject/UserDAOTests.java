@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("lb")
+@ActiveProfiles("wyx")
 class UserDAOTests {
 
     @Autowired
@@ -40,8 +40,7 @@ class UserDAOTests {
     @Transactional
     @Rollback
     void testAddUser() {
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         userDAO.addUser("Xuanniu", "aa@gmail.com", "123456789");
         UserPO userPO = usersService.getOne(
                 new LambdaQueryWrapper<UserPO>()
@@ -55,8 +54,7 @@ class UserDAOTests {
     @Transactional
     @Rollback
     void testGetUserList() {
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         ArrayList<String> names = new ArrayList<>();
         int n = 20;
         for (Integer i = 0; i < n; i++) {
@@ -81,8 +79,7 @@ class UserDAOTests {
     @Transactional
     @Rollback
     void testGetUserByUsername() {
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         UserPO newUser = UserPO.builder()
                 .username("Xuanniu")
                 .email("aaa@gmail.com")
@@ -99,8 +96,7 @@ class UserDAOTests {
     @Rollback
     void testGetUserById() {
         String name = "Xuanniu";
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         UserPO newUser = UserPO.builder()
                 .username(name)
                 .email("aaa@gmail.com")
@@ -127,8 +123,7 @@ class UserDAOTests {
     void testUpdateUserEmail() {
         String name = "Xuanniu";
         String email = "bbb@outlook.com";
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         UserPO newUser = UserPO.builder()
                 .username(name)
                 .email("aaa@gmail.com")
@@ -153,8 +148,7 @@ class UserDAOTests {
         String name = "Xuanniu";
         String password = "cnji257856f";
         String encodedPassword = passwordEncoder.encode(password);
-        Page<UsersDTO> page = new Page<>();
-        usersService.clearUserList(page);
+        deleteAllUser();
         UserPO newUser = UserPO.builder()
                 .username(name)
                 .email("aaa@gmail.com")

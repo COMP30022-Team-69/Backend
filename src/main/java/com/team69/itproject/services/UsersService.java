@@ -13,5 +13,4 @@ import com.team69.itproject.entities.po.UserPO;
 public interface UsersService extends IService<UserPO> {
 
     Page<UsersDTO> getUserList(Page<UsersDTO> page);
-    public void clearUserList(Page<UsersDTO> page);
 }

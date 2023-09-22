@@ -11,6 +11,7 @@ import com.team69.itproject.entities.dto.UsersDTO;
 import com.team69.itproject.entities.po.SongPO;
 import com.team69.itproject.entities.po.UserPO;
 import com.team69.itproject.entities.vo.SongVO;
+import com.team69.itproject.mappers.SongMapper;
 import com.team69.itproject.services.SongService;
 import com.team69.itproject.services.UsersService;
 import org.apache.logging.log4j.core.util.PasswordDecryptor;
@@ -32,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("lb")
+@ActiveProfiles("wyx")
 class SongDAOTests {
 
     @Autowired
@@ -44,8 +45,9 @@ class SongDAOTests {
     @Transactional
     @Rollback
     void testGetSongById() {
+        deleteAllSong();
         String songName = "ABC";
-        SongVO songVO = new SongVO(songName,"aaa","DEF", LocalDate.now());
+        SongVO songVO = new SongVO(songName, "aaa", "DEF", LocalDate.now());
         SongPO newSong = new SongPO();
         BeanUtil.copyProperties(songVO, newSong);
         songService.save(newSong);
@@ -55,11 +57,118 @@ class SongDAOTests {
         long id = songs.getRecords().get(0).getId();
 
         SongDTO song = songDAO.getSongById(id);
-        System.out.println(song.getName());
+        assert (song.getName().equals(songName));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void testGetSongList() {
+        deleteAllSong();
+        String songName = "ABC";
+        int n = 20;
+        for (Integer i = 0; i < n; i++) {
+            SongVO songVO = new SongVO(songName + i, "aaa", "DEF", LocalDate.now());
+            SongPO newSong = new SongPO();
+            BeanUtil.copyProperties(songVO, newSong);
+            songService.save(newSong);
+        }
+
+        Page<SongDTO> songPOPage = new Page<>(0, 20);
+        Page<SongDTO> songs = songService.searchSongByName(songPOPage, songName);
+        long id = songs.getRecords().get(0).getId();
+
+        Page<SongDTO> song = songDAO.getSongList(0, 20);
+        for (int i = 0; i < n; i++) {
+            assert (song.getRecords().get(i).getName().equals(songName + i));
+        }
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void testAddSong() {
+        deleteAllSong();
+        String songName = "ABC";
+        String songAuthor = "DEF";
+        int n = 20;
+        SongVO songVO = new SongVO(songName, "aaa", songAuthor, LocalDate.now());
+        songDAO.addSong(songVO);
+
+
+        Page<SongDTO> songPOPage = new Page<>(0, 20);
+        Page<SongDTO> songs = songService.searchSongByName(songPOPage, songName);
+        long id = songs.getRecords().get(0).getId();
+        assert (songs.getRecords().get(0).getAuthor().equals(songAuthor));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void testUpdateSong() {
+        deleteAllSong();
+        String songName = "ABC";
+        int n = 20;
+        for (Integer i = 0; i < n; i++) {
+            SongVO songVO = new SongVO(songName + i, "aaa", "DEF", LocalDate.now());
+            SongPO newSong = new SongPO();
+            BeanUtil.copyProperties(songVO, newSong);
+            songService.save(newSong);
+        }
+
+        Page<SongDTO> songPOPage = new Page<>(0, 20);
+        Page<SongDTO> songs = songService.searchSongByName(songPOPage, songName+5);
+        long id = songs.getRecords().get(0).getId();
+
+        SongVO songVO = new SongVO("ASDAD", "asd", "fff", LocalDate.now());
+        songDAO.updateSong(id,songVO);
+
+        songs = songService.searchSongByName(songPOPage,"ASDAD");
+        assert(songs.getRecords().get(0).getId().equals(id));
     }
 
     void deleteAllSong(){
         songService.remove(new QueryWrapper<>());
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    void testDeleteSong() {
+        deleteAllSong();
+        String songName = "ABC";
+        int n = 20;
+        for (Integer i = 0; i < n; i++) {
+            SongVO songVO = new SongVO(songName + i, "aaa", "DEF", LocalDate.now());
+            SongPO newSong = new SongPO();
+            BeanUtil.copyProperties(songVO, newSong);
+            songService.save(newSong);
+        }
+
+        Page<SongDTO> songPOPage = new Page<>(0, 20);
+        Page<SongDTO> songs = songService.searchSongByName(songPOPage, songName+5);
+        long id = songs.getRecords().get(0).getId();
+
+        songDAO.deleteSong(id);
+        SongPO song = songService.getById(id);
+        assert(song == null);
+
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void testGetSongByName() {
+        deleteAllSong();
+        String songName = "ABC";
+        SongVO songVO = new SongVO(songName, "aaa", "DEF", LocalDate.now());
+        SongPO newSong = new SongPO();
+        BeanUtil.copyProperties(songVO, newSong);
+        songService.save(newSong);
+
+        Page<SongDTO> song = songDAO.getSongByName(0,20,songName);
+        assert (song.getRecords().get(0).getName().equals(songName));
+        song = songDAO.getSongByName(0,20,"CAB");
+        assert (song.getTotal()==0);
+    }
 }

@@ -3,6 +3,7 @@ package com.team69.itproject.services;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.team69.itproject.entities.dto.SongDTO;
+import com.team69.itproject.entities.dto.UsersDTO;
 import com.team69.itproject.entities.po.SongPO;
 
 public interface SongService extends IService<SongPO> {
