@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class SongController {
     )
     @GetMapping("/list")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    public ResponseEntity<Page<SongDTO>> getSongList(@RequestParam int page,
-                                                     @RequestParam int size) {
+    public ResponseEntity<Page<SongDTO>> getSongList(@RequestParam("page") int page,
+                                                     @RequestParam("size") int size) {
         Page<SongDTO> songList = songDAO.getSongList(page, size);
         if (songList == null) {
             return ResponseEntity.error(404, null);
@@ -47,9 +48,9 @@ public class SongController {
     )
     @GetMapping("/search/name")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    public ResponseEntity<Page<SongDTO>> getSongByName(@RequestParam int page,
-                                                       @RequestParam int size,
-                                                       @RequestParam String name) {
+    public ResponseEntity<Page<SongDTO>> getSongByName(@RequestParam("page") int page,
+                                                       @RequestParam("size") int size,
+                                                       @RequestParam("name") String name) {
         Page<SongDTO> songList = songDAO.getSongByName(page, size, name);
         if (songList == null) {
             return ResponseEntity.error(404, null);
@@ -63,9 +64,9 @@ public class SongController {
     )
     @GetMapping("/list/category")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    public ResponseEntity<Page<SongDTO>> getSongByCategory(@RequestParam int page,
-                                                           @RequestParam int size,
-                                                           @RequestParam String category) {
+    public ResponseEntity<Page<SongDTO>> getSongByCategory(@RequestParam("page") int page,
+                                                           @RequestParam("size") int size,
+                                                           @RequestParam("category") String category) {
         Page<SongDTO> songList = songDAO.getSongByCategory(page, size, category);
         if (songList == null) {
             return ResponseEntity.error(404, null);
@@ -79,7 +80,7 @@ public class SongController {
     )
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
-    public ResponseEntity<SongDTO> getSongById(@PathVariable Long id) {
+    public ResponseEntity<SongDTO> getSongById(@PathVariable("id") Long id) {
         SongDTO songById = songDAO.getSongById(id);
         if (songById == null) {
             return ResponseEntity.error(404, null);
@@ -93,7 +94,7 @@ public class SongController {
     )
     @PostMapping("/add")
     @PreAuthorize("hasAnyAuthority('admin')")
-    public ResponseEntity<String> addSong(@RequestBody SongVO songVO) {
+    public ResponseEntity<String> addSong(@RequestBody @Valid SongVO songVO) {
         boolean addSong = songDAO.addSong(songVO);
         if (addSong) {
             return ResponseEntity.ok();
@@ -107,8 +108,8 @@ public class SongController {
     )
     @PostMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('admin')")
-    public ResponseEntity<String> updateSong(@PathVariable Long id,
-                                             @RequestBody SongVO songVO) {
+    public ResponseEntity<String> updateSong(@PathVariable("id") Long id,
+                                             @RequestBody @Valid SongVO songVO) {
         boolean updateSong = songDAO.updateSong(id, songVO);
         if (updateSong) {
             return ResponseEntity.ok();
@@ -122,7 +123,7 @@ public class SongController {
     )
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('admin')")
-    public ResponseEntity<String> deleteSong(@PathVariable Long id) {
+    public ResponseEntity<String> deleteSong(@PathVariable("id") Long id) {
         boolean deleteSong = songDAO.deleteSong(id);
         if (deleteSong) {
             return ResponseEntity.ok();
@@ -138,9 +139,9 @@ public class SongController {
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<Page<SongDTO>> getUserSongList(@RequestHeader("User-Id") Long id,
-                                                         @RequestParam int page,
-                                                         @RequestParam int size,
-                                                         @RequestParam String songListName) {
+                                                         @RequestParam("page") int page,
+                                                         @RequestParam("size") int size,
+                                                         @RequestParam("songListName") String songListName) {
         Page<SongDTO> songList = songDAO.getUserSongListByName(id, songListName, page, size);
         if (songList == null) {
             return ResponseEntity.error(404, null);
@@ -156,7 +157,7 @@ public class SongController {
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> addSongToList(@RequestHeader("User-Id") Long userId,
-                                                @RequestBody AddSongToListVO addSongToListVO) {
+                                                @RequestBody @Valid AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();
         if (!listName.contains(songListName)) {
             return ResponseEntity.error(501, "Song list name is not allowed");
@@ -173,7 +174,7 @@ public class SongController {
     @PreAuthorize("hasAnyAuthority('admin', 'normal')")
     @UserAuth({AccessLevel.SELF, AccessLevel.ADMIN})
     public ResponseEntity<String> deleteSongFromList(@RequestHeader("User-Id") Long userId,
-                                                     @RequestBody AddSongToListVO addSongToListVO) {
+                                                     @RequestBody @Valid AddSongToListVO addSongToListVO) {
         String songListName = addSongToListVO.getSongListName();
         if (!listName.contains(songListName)) {
             return ResponseEntity.error(501, "Song list name is not allowed");
