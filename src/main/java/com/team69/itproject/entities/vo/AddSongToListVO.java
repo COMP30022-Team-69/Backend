@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -14,6 +15,6 @@ public class AddSongToListVO {
     @NotEmpty(message = "Song list name should not be empty!")
     private String songListName;
     @ApiModelProperty(value ="A list of song ids", notes = "A list of song IDs that is going to be added to the target list")
-    @NotEmpty(message = "Song id list should not be empty!")
+    @NotNull(message = "Song id list should not be empty!")
     private List<Long> songIdList;
 }
