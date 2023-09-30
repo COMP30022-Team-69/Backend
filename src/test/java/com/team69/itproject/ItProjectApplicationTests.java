@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.team69.itproject.entities.dto.SongDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,7 @@ import com.team69.itproject.dao.SongDAO;
 import com.team69.itproject.entities.vo.SongVO;
 import org.springframework.http.MediaType;
 @SpringBootTest
+@ActiveProfiles("test")
 class ItProjectApplicationTests {
 
     @Test
