@@ -17,10 +17,6 @@ import org.springframework.http.MediaType;
 @SpringBootTest
 @ActiveProfiles("test")
 class ItProjectApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
     public class SongControllerTests {
         private MockMvc mockMvc;
         private SongDAO songDAO = mock(SongDAO.class);

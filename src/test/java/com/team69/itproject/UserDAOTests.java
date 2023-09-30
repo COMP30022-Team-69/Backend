@@ -47,7 +47,6 @@ class UserDAOTests {
                         .eq(UserPO::getUsername, "Xuanniu")
         );
         assertArrayEquals(userPO.getUsername().toCharArray(), "Xuanniu".toCharArray());
-        System.out.println("Pig");
     }
 
     @Test
@@ -69,7 +68,6 @@ class UserDAOTests {
         }
         Page<UsersDTO> pages = userDAO.getUserList(1, 20);
         for (int i = 0; i < n; i++) {
-            System.out.println(pages.getRecords().get(i).getUsername());
             //UsersDTO xn0 = userDAO.getUserByUsername("Xuanniu0");
             assertArrayEquals(pages.getRecords().get(i).getUsername().toCharArray(), names.get(i).toCharArray());
         }
@@ -111,7 +109,6 @@ class UserDAOTests {
         long id = xn.getId();
         UsersDTO xnn = userDAO.getUserById(id);
         assertArrayEquals(xnn.getUsername().toCharArray(),name.toCharArray());
-        System.out.println(xnn.getUsername());
         long fid = id +1;
         UsersDTO failCase = userDAO.getUserById(fid);
         assert(failCase.getUsername()==null);
