@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/song")
 public class SongController {
-    private final List<String> listName = Arrays.asList("Background", "Sleep", "Relax", "Favorite");
+    private final List<String> listName = Arrays.asList("Background", "Sleep", "Relax", "Favourite");
     @Resource
     private SongDAO songDAO;
 

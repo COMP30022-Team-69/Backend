@@ -57,6 +57,7 @@ public class UserDAO {
         UserPO userPO = usersService.getById(id);
         UsersDTO usersDTO = new UsersDTO();
         BeanUtil.copyProperties(userPO, usersDTO);
+        usersDTO.setAuthorities(userPO.getAuthorities());
         return usersDTO;
     }
 
