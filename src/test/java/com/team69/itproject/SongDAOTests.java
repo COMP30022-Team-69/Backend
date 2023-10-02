@@ -13,6 +13,7 @@ import com.team69.itproject.entities.po.UserPO;
 import com.team69.itproject.entities.vo.SongVO;
 import com.team69.itproject.mappers.SongMapper;
 import com.team69.itproject.services.SongService;
+import com.team69.itproject.services.UserSongListService;
 import com.team69.itproject.services.UsersService;
 import org.apache.logging.log4j.core.util.PasswordDecryptor;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,10 @@ class SongDAOTests {
     private SongDAO songDAO;
     @Autowired
     private SongService songService;
+    @Autowired
+    private UserSongListService USLService;
+    @Autowired
+    private UserSongListService UsersService;
 
     @Test
     @Transactional
@@ -171,4 +176,6 @@ class SongDAOTests {
         song = songDAO.getSongByName(0,20,"CAB");
         assert (song.getTotal()==0);
     }
+
+
 }
