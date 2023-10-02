@@ -2,7 +2,6 @@ package com.team69.itproject.aop;
 
 import com.team69.itproject.aop.annotations.UserAuth;
 import com.team69.itproject.aop.enums.AccessLevel;
-import com.team69.itproject.exceptions.BusinessException;
 import com.team69.itproject.utils.PublicUtils;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +18,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Aspect
 @Component
@@ -64,7 +64,7 @@ public class UserAuthAspect {
 
     private boolean handleAdminLevel(AccessLevel accessLevel, Claims claims){
         if (accessLevel.equals(AccessLevel.ADMIN)){
-            String role = claims.get("role").toString();
+            String role = claims.get("authorities").toString();
             return role.contains("admin");
         }
         return false;

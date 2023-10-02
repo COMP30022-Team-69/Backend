@@ -32,11 +32,6 @@ public class SongDAO {
         return songDTO;
     }
 
-    public Page<SongDTO> searchSongByName(String name, int page, int size) {
-        Page<SongDTO> songPOPage = new Page<>(page, size);
-        return songService.searchSongByName(songPOPage, name);
-    }
-
     @Cacheable(value = "songList", key = "#page+'-'+#size")
     public Page<SongDTO> getSongList(int page, int size) {
         Page<SongDTO> songPOPage = new Page<>(page, size);

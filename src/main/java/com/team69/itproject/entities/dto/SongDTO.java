@@ -6,13 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SongDTO {
+public class SongDTO implements Serializable {
 
     @ApiModelProperty(value ="Song ID", notes = "ID of song")
     private Long id;
