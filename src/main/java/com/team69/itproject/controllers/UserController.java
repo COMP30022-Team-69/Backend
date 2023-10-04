@@ -39,6 +39,16 @@ public class UserController {
     }
 
     @ApiOperation(
+            value = "Check username availability",
+            authorizations = {@Authorization("normal"), @Authorization("admin")}
+    )
+    @GetMapping("/check/{username}")
+    @PreAuthorize("hasAnyAuthority('normal', 'admin')")
+    public ResponseEntity<Boolean> checkUsernameAvailability(@PathVariable("username") String username) {
+        return ResponseEntity.ok(userDAO.getUserByUsername(username) == null);
+    }
+
+    @ApiOperation(
             value = "Get a user by username",
             authorizations = {@Authorization("normal"), @Authorization("admin")}
     )

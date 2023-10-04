@@ -7,7 +7,9 @@ import com.team69.itproject.entities.dto.UsersDTO;
 import com.team69.itproject.entities.po.UserPO;
 import com.team69.itproject.services.UsersService;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,12 @@ public class UserDAO {
     @Resource
     private UsersService usersService;
 
+    @Caching(evict = {
+                @CacheEvict(value = "userList", allEntries = true)
+            }, put = {
+                @CachePut(value = "users", key = "#result.id"),
+                @CachePut(value = "users", key = "#result.username")
+            })
     public boolean addUser(String username, String email, String password) {
         UserPO newUser = UserPO.builder()
                 .username(username)
@@ -32,7 +40,7 @@ public class UserDAO {
         return usersService.save(newUser);
     }
 
-    @Cacheable(value = "users", key = "'-list-'+#page+'-'+#size")
+    @Cacheable(value = "userList", key = "'-list-'+#page+'-'+#size")
     public Page<UsersDTO> getUserList(int page, int size) {
         Page<UsersDTO> usersDTOPage = new Page<>(page, size);
         return usersService.getUserList(usersDTOPage);
@@ -61,21 +69,30 @@ public class UserDAO {
         return usersDTO;
     }
 
-    @CacheEvict(value = "users", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "users", key = "#id"),
+            @CacheEvict(value = "userList", allEntries = true)
+    })
     public void updateUserEmail(Long id, String email) {
         UserPO userPO = usersService.getById(id);
         userPO.setEmail(email);
         usersService.saveOrUpdate(userPO);
     }
 
-    @CacheEvict(value = "users", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "users", key = "#id"),
+            @CacheEvict(value = "userList", allEntries = true)
+    })
     public void updateUserPassword(Long id, String password) {
         UserPO userPO = usersService.getById(id);
         userPO.setPassword(passwordEncoder.encode(password));
         usersService.saveOrUpdate(userPO);
     }
 
-    @CacheEvict(value = "users", key = "#id")
+    @Caching(evict = {
+            @CacheEvict(value = "users", key = "#id"),
+            @CacheEvict(value = "userList", allEntries = true)
+    })
     public void deleteUser(Long id) {
         usersService.removeById(id);
     }
