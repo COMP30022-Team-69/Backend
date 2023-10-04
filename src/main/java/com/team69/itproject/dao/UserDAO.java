@@ -93,6 +93,16 @@ public class UserDAO {
             @CacheEvict(value = "users", key = "#id"),
             @CacheEvict(value = "userList", allEntries = true)
     })
+    public void updateUserAuthority(Long id, String authority) {
+        UserPO userPO = usersService.getById(id);
+        userPO.setAuthorities(List.of(new SimpleGrantedAuthority(authority)));
+        usersService.saveOrUpdate(userPO);
+    }
+
+    @Caching(evict = {
+            @CacheEvict(value = "users", key = "#id"),
+            @CacheEvict(value = "userList", allEntries = true)
+    })
     public void deleteUser(Long id) {
         usersService.removeById(id);
     }

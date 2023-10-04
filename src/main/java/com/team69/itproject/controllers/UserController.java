@@ -124,4 +124,19 @@ public class UserController {
         userDAO.updateUserPassword(userId, data.get("password"));
         return ResponseEntity.ok();
     }
+
+    @ApiOperation(
+            value = "Update User Authority",
+            authorizations = {@Authorization("admin")}
+    )
+    @PostMapping("/update/authority")
+    @PreAuthorize("hasAnyAuthority('admin')")
+    public ResponseEntity<String> updateAuthority(@RequestParam("userId") Long userId, @RequestBody Map<String, String> data) {
+        UsersDTO userById = userDAO.getUserById(userId);
+        if (userById == null) {
+            return ResponseEntity.error(404, null);
+        }
+        userDAO.updateUserAuthority(userId, data.get("authority"));
+        return ResponseEntity.ok();
+    }
 }
