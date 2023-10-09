@@ -41,7 +41,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/webjars/**",
                         "/send/callback",
                         "/oauth/token",
-                        "/user/register")
+                        "/user/register",
+                        "/user/check/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
