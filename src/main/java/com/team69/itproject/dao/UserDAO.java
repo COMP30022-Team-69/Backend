@@ -24,7 +24,10 @@ public class UserDAO {
     @Resource
     private UsersService usersService;
 
-    @CacheEvict(value = "userList", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = "userList", allEntries = true),
+            @CacheEvict(value = "users", key = "#username")
+    })
     public boolean addUser(String username, String email, String password) {
         UserPO newUser = UserPO.builder()
                 .username(username)
