@@ -50,7 +50,7 @@
                  JOIN user_song_list usl ON s.id = usl.song_id
         WHERE usl.user_id = #{userId}
           AND usl.name = #{name}
-          AND status = 1
+          AND s.status = 1
     </select>
 
 </mapper>

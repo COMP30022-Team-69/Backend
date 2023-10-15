@@ -54,7 +54,8 @@ public class SongDAO {
     @Caching(
             evict = {
                     @CacheEvict(value = "songList", allEntries = true),
-                    @CacheEvict(value = "song", key = "#id")
+                    @CacheEvict(value = "song", key = "#id"),
+                    @CacheEvict(value = "userSongList", allEntries = true)
             }
     )
     public boolean updateSong(Long id, SongVO songVO) {
@@ -66,7 +67,8 @@ public class SongDAO {
     @Caching(
             evict = {
                     @CacheEvict(value = "songList", allEntries = true),
-                    @CacheEvict(value = "song", key = "#id")
+                    @CacheEvict(value = "song", key = "#id"),
+                    @CacheEvict(value = "userSongList", allEntries = true)
             }
     )
     public boolean deleteSong(Long id) {
